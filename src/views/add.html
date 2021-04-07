@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ajouter un hôte</title>
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.3/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="container" style="padding-top: 4rem">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <h1>Ajouter un hôte</h1>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 2rem">
+                <div class="col-md-6 col-md-offset-3">
+                    <form method="POST" role="form">
+                        <div class="form-group">
+                            <label for="host">Hôte *</label>
+                            <input type="text" class="form-control" name="host" placeholder="hôte" required>
+                            <small>Peut être une ipv4 ou un nom de domaine sans le protocol</small>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="port">Port *</label>
+                            <input type="number" class="form-control" name="port" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Nom</label>
+                            <input type="text" class="form-control" name="name"  placeholder="Nom">
+                            <small>Par défaut, l'hôte est le nom affiché sur le discord</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="input" class="form-control" rows="3"></textarea>
+                        </div>
+                    
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <script>
+            $("form").submit(function(e) {
+                e.preventDefault();
+
+                $.post("/api/host", $("form").serialize())
+                    .done(function( data ) {
+                        if(data.success) {
+                            alert("L'hôte a bien été ajouté ! Il s'affichera dans quelques secondes dans le channel.");
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .fail(function(data) {
+                        alert(data.responseJSON.message || 'An error occured');
+                    });
+            })
+        </script>
+    </body>
+</html>
