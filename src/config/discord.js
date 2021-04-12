@@ -26,4 +26,12 @@ module.exports.discord = {
   ping: {
     tokenValidity: '20',
   },
+
+  giveways: {
+    channelId: '831226983965786162',
+    roles: ['admin'],
+    reaction: {
+      emoji: '🍀',
+    },
+  },
 };
