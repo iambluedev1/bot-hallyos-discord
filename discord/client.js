@@ -14,19 +14,45 @@ new Promise((resolve, reject) => {
     client.on(listener.listen, listener.run);
   });
 
+  const replaceAll = (str, search, replacement) => {
+    var newStr = '';
+    if (_.isString(str)) {
+      newStr = str.split(search).join(replacement);
+    }
+    return newStr;
+  };
+
+  const formatCommand = (name, command) => {
+    let regexCommand = command.usage;
+    if (regexCommand == undefined) {
+      throw new Error(name + ' is not valid');
+    }
+
+    regexCommand = regexCommand.replace(
+      /\(([:a-zA-Z]+)\|[:a-zA-Z<>]+\)/gm,
+      '($1)'
+    );
+    regexCommand = replaceAll(regexCommand, ':num', '-?[0-9]+');
+    regexCommand = replaceAll(regexCommand, ':enum', '[a-zA-Z0-9_]+');
+    regexCommand = replaceAll(regexCommand, ':word', '[a-zA-ZÀ-ÖØ-öø-ÿ]+');
+    regexCommand = replaceAll(regexCommand, ':id', '[a-zA-Z0-9-]+');
+    regexCommand = replaceAll(regexCommand, ':all', '.*');
+    command.regex = new RegExp(regexCommand, 'im');
+    command.match = (cmd) => {
+      var matches = cmd.match(command.regex);
+      return matches;
+    };
+    return command;
+  };
+
   walk('./discord/commands', function (err, files) {
     if (err) throw err;
     files.forEach((file) => {
       let command = require(file);
       let fileName = file.split('/commands/')[1];
-      if (!fileName.includes('/')) {
-        _.merge(global['hallyos']['discord']['commands'], command);
-      } else {
-        let parts = fileName.split('/');
-        parts.pop();
-        parts.push(command.command);
-        _.set(hallyos.discord.commands, parts.join('.'), command);
-      }
+      global['hallyos']['discord']['commands'].push(
+        formatCommand(fileName, command)
+      );
       hallyos.log.debug('Loaded Discord Command ' + fileName);
     });
   });

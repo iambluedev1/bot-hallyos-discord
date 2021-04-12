@@ -2,7 +2,6 @@ module.exports = {
   command: 'lock',
   description: 'Vérouiller un ticket',
   usage: 'ticket manage lock',
-  param: 0,
   execute: async (args, channel, member, message) => {
     const ticket = await db('hallyos_tickets').where({
       channel_id: channel.id,

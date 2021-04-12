@@ -6,7 +6,6 @@ module.exports = {
   command: 'list',
   description: 'Liste tous les hôtes',
   usage: 'ping list',
-  param: 0,
   execute: (args, channel, member, message) => {
     fetch('http://localhost:' + hallyos.config.port + '/api/hosts?bot=true')
       .then((e) => e.text())

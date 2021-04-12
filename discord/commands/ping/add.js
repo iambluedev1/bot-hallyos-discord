@@ -10,7 +10,6 @@ module.exports = {
   command: 'add',
   description: 'Ajouter un hôte',
   usage: 'ping add',
-  param: 0,
   execute: (args, channel, member, message) => {
     const token = signToken(member.id, member.username);
     hallyos.discord.client.sendInfo(

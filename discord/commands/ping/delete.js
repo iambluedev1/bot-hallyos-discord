@@ -1,8 +1,7 @@
 module.exports = {
   command: 'delete',
   description: 'Supprime une hôte',
-  usage: "ping delete <uuid de l'hote>",
-  param: 1,
+  usage: "ping delete (:id|<uuid de l'hote>)",
   execute: (args, channel, member, message) => {
     if (!validator.isUUID(args[0])) {
       message.delete();

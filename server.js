@@ -16,7 +16,7 @@ global['hallyos'] = {
   log: {},
   helpers: {},
   discord: {
-    commands: {},
+    commands: [],
     client: null,
   },
 };
