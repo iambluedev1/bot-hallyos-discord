@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod:master": "node server.js -c false",
+    "prod:cron": "node server.js -c true",
+    "dev:master": "nodemon server.js -c false"
   },
   "author": "",
   "license": "ISC",
@@ -40,6 +43,7 @@
     "read-last-lines": "^1.7.2",
     "uest": "^1.0.20",
     "validator": "^13.5.2",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "yargs": "^16.2.0"
   }
 }
