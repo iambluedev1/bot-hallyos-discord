@@ -40,4 +40,15 @@ app.post('/api/host', require('./controllers/HostController').create);
 app.patch('/api/host/:id', require('./controllers/HostController').update);
 app.delete('/api/host/:id', require('./controllers/HostController').delete);
 
+app.get('/api/tickets', require('./controllers/TicketsController').find);
+app.get('/api/tickets/:id', require('./controllers/TicketsController').find);
+app.patch(
+  '/api/tickets/:id',
+  require('./controllers/TicketsController').update
+);
+app.delete(
+  '/api/tickets/:id',
+  require('./controllers/TicketsController').delete
+);
+
 module.exports = app;
