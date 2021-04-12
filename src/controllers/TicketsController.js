@@ -21,6 +21,9 @@ module.exports = {
               });
               e.messages = messages;
             }
+            e.participants = await db('hallyos_tickets_externals').where({
+              ticket_id: e.id,
+            });
             return e;
           })
         );
