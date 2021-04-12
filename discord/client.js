@@ -67,5 +67,7 @@ new Promise((resolve, reject) => {
   hallyos.discord.client.sendMessage = msgUtils.sendMessage;
   hallyos.discord.client.sendEmbed = msgUtils.sendEmbed;
   hallyos.discord.reactMessage = null;
-  client.login(hallyos.config.discord.token);
+  client.login(hallyos.config.discord.token).then(() => {
+    hallyos.log.info('Discord client connected');
+  });
 });
