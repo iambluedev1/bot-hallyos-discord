@@ -35,7 +35,11 @@ new Promise((resolve, reject) => {
     );
     regexCommand = replaceAll(regexCommand, ':num', '-?[0-9]+');
     regexCommand = replaceAll(regexCommand, ':enum', '[a-zA-Z0-9_]+');
-    regexCommand = replaceAll(regexCommand, ':word', '[a-zA-ZÀ-ÖØ-öø-ÿ]+');
+    regexCommand = replaceAll(
+      regexCommand,
+      ':word',
+      '[a-zA-ZÀ-ÖØ-öø-ÿ0-9-_:/]+'
+    );
     regexCommand = replaceAll(regexCommand, ':tag', '[a-zA-ZÀ-ÖØ-öø-ÿ#0-9]+');
     regexCommand = replaceAll(regexCommand, ':id', '[a-zA-Z0-9-]+');
     regexCommand = replaceAll(regexCommand, ':all', '.*');
