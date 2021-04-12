@@ -1,9 +1,11 @@
 module.exports = {
   listen: 'createTicket',
   run: async (member) => {
-    const guild = hallyos.discord.client.guilds.resolve('828291377698701343');
+    const guild = hallyos.discord.client.guilds.resolve(
+      hallyos.config.discord.guildId
+    );
     const categorySupport = hallyos.discord.client.channels.cache.get(
-      '828557401560580097'
+      hallyos.config.discord.support.categoryId
     );
     const retrieved = (
       await db('hallyos_tickets').where({
@@ -71,7 +73,7 @@ module.exports = {
     );
 
     hallyos.log.info(
-      'Ticket ' + ticket[0].id + ' created by ' + member.user.tag
+      'Ticket ' + retrieved.id + ' created by ' + member.user.tag
     );
   },
 };

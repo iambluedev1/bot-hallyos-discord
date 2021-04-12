@@ -2,9 +2,11 @@ module.exports.discord = {
   name: 'HallyosBot',
   prefix: '-',
   token: 'ODI4MjkyNjE1MjcwMzAxNzU2.YGndnA.Q0z3gHd_Ng_OhKZ2asvRm2Vif5E',
+  guildId: '828291377698701343',
 
   support: {
     channelId: '828552540802383882',
+    categoryId: '828557401560580097',
     reactionEmoji: '✅',
     roles: ['support', 'admin'],
   },
