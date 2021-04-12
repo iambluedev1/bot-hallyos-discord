@@ -2,6 +2,7 @@ module.exports = {
   command: 'unlock',
   description: 'Dévérouiller un ticket',
   usage: 'ticket manage unlock',
+  roles: hallyos.config.discord.support.roles,
   execute: async (args, channel, member, message) => {
     const ticket = await db('hallyos_tickets').where({
       channel_id: channel.id,

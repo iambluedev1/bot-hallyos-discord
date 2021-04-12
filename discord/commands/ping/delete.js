@@ -2,6 +2,7 @@ module.exports = {
   command: 'delete',
   description: 'Supprime une hôte',
   usage: "ping delete (:id|<uuid de l'hote>)",
+  roles: hallyos.config.discord.status.roles,
   execute: (args, channel, member, message) => {
     if (!validator.isUUID(args[0])) {
       message.delete();

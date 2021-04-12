@@ -3,6 +3,7 @@ const client = new Discord.Client();
 const fs = require('fs');
 const walk = require('../src/utils/walk');
 const msgUtils = require('./utils/msg');
+const { hasRole } = require('./utils/hasRole');
 const TimeAgo = require('javascript-time-ago');
 const fr = require('javascript-time-ago/locale/fr');
 TimeAgo.addDefaultLocale(fr);
@@ -66,6 +67,7 @@ new Promise((resolve, reject) => {
   hallyos.discord.client.sendWarn = msgUtils.sendWarn;
   hallyos.discord.client.sendMessage = msgUtils.sendMessage;
   hallyos.discord.client.sendEmbed = msgUtils.sendEmbed;
+  hallyos.discord.client.hasRole = hasRole;
   hallyos.discord.reactMessage = null;
   client.login(hallyos.config.discord.token).then(() => {
     hallyos.log.info('Discord client connected');

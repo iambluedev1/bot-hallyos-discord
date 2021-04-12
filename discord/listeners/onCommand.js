@@ -12,6 +12,17 @@ module.exports = {
       let matches = null;
 
       if ((matches = command.match(cmd)) != null) {
+        if (
+          command.roles != undefined &&
+          !hallyos.discord.client.hasRole(member, command.roles)
+        ) {
+          hallyos.discord.client.sendError(
+            'Commande inconnue❓',
+            "Il semblerait que cette commande n'existe pas !",
+            channel
+          );
+          return;
+        }
         const args = _.filter(matches, (e) => e != cmd && !_.isObject(e));
         hallyos.helpers.record.discordAction(
           member,

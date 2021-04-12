@@ -6,10 +6,12 @@ module.exports.discord = {
   support: {
     channelId: '828552540802383882',
     reactionEmoji: '✅',
+    roles: ['support', 'admin'],
   },
 
   status: {
     channelId: '828528672810074122',
+    roles: ['admin'],
   },
 
   colors: {
