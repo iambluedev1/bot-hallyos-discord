@@ -41,9 +41,30 @@ module.exports.sendSuccess = (title, message, channel, footer, color) => {
 };
 
 module.exports.sendEmbed = (title, message, channel, footer, color) => {
-  const response = new Discord.MessageEmbed()
-    .addField(`**${title}**`, `${message}`)
-    .setColor(color);
+  const response = new Discord.MessageEmbed().setColor(color);
+
+  if (message.length > 1024) {
+    let chunks = [''];
+    let lastChunkIndex = 0;
+
+    message.split('\n').forEach((v) => {
+      if (chunks[lastChunkIndex].length + v.length < 1000) {
+        chunks[lastChunkIndex] += '\n' + v;
+      } else {
+        chunks[++lastChunkIndex] = v;
+      }
+    });
+
+    chunks.forEach((v, i) => {
+      if (v.trim() != '')
+        response.addField(
+          `**${title} - Page ${i + 1}/${chunks.length}**`,
+          `${v}`
+        );
+    });
+  } else {
+    response.addField(`**${title}**`, `${message}`);
+  }
 
   if (footer != undefined) response.setFooter(footer);
 
