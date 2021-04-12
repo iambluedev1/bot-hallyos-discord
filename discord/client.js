@@ -29,7 +29,7 @@ new Promise((resolve, reject) => {
     }
 
     regexCommand = regexCommand.replace(
-      /\(([:a-zA-Z]+)\|[:a-zA-Z<>]+\)/gm,
+      /\(([:a-zA-Z]+)\|[a-zA-ZÀ-ÖØ-öø-ÿ:_<>'"` ]+\)/gm,
       '($1)'
     );
     regexCommand = replaceAll(regexCommand, ':num', '-?[0-9]+');
