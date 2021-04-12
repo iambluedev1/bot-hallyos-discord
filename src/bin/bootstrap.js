@@ -173,4 +173,116 @@ module.exports = (knex) => {
         });
     }
   });
+
+  new Promise((resolve, reject) => {
+    knex.schema.hasTable('hallyos_giveways').then((exists) => {
+      if (!exists) {
+        knex.schema
+          .createTable(`hallyos_giveways`, (t) => {
+            t.uuid('id').primary();
+            t.text('name').notNullable();
+            t.text('description');
+            t.text('type').defaultTo('ALL_SERVER').notNullable();
+            t.string('end_set_at');
+            t.string('discord_message_id');
+            t.timestamp('started_at');
+            t.boolean('scheduled').defaultTo(false).notNullable();
+            t.timestamp('created_at').defaultTo(knex.fn.now());
+          })
+          .then(() => knex.raw(onInsertTrigger('hallyos_giveways')))
+          .then(() => {
+            hallyos.log.info("Successfully created table 'hallyos_giveways'");
+            resolve();
+          })
+          .catch((err) => {
+            hallyos.log.error(err);
+            reject();
+          });
+      } else {
+        resolve();
+      }
+    });
+  }).then(() => {
+    knex.schema.hasTable('hallyos_giveways_participants').then((exists) => {
+      if (!exists) {
+        knex.schema
+          .createTable(`hallyos_giveways_participants`, (t) => {
+            t.uuid('id').primary();
+            t.uuid('giveway_id')
+              .references('id')
+              .inTable('hallyos_giveways')
+              .notNull()
+              .onDelete('cascade');
+            t.string('discord_author_id', 255);
+            t.string('discord_author_username');
+            t.timestamps(true, true);
+            t.unique(['id', 'giveway_id']);
+          })
+          .then(() =>
+            knex.raw(onInsertTrigger('hallyos_giveways_participants'))
+          )
+          .then(() => {
+            hallyos.log.info(
+              "Successfully created table 'hallyos_giveways_participants'"
+            );
+          })
+          .catch((err) => {
+            hallyos.log.error(err);
+          });
+      }
+    });
+
+    knex.schema.hasTable('hallyos_giveways_results').then((exists) => {
+      if (!exists) {
+        knex.schema
+          .createTable(`hallyos_giveways_results`, (t) => {
+            t.uuid('giveway_id')
+              .references('id')
+              .inTable('hallyos_giveways')
+              .notNull()
+              .onDelete('cascade')
+              .primary();
+            t.string('winner_discord_author_id', 255);
+            t.string('winner_discord_author_username');
+            t.string('seed');
+            t.timestamps(true, true);
+          })
+          .then(() => {
+            hallyos.log.info(
+              "Successfully created table 'hallyos_giveways_results'"
+            );
+          })
+          .catch((err) => {
+            hallyos.log.error(err);
+          });
+      }
+    });
+
+    knex.schema.hasTable('hallyos_giveways_rewards').then((exists) => {
+      if (!exists) {
+        knex.schema
+          .createTable(`hallyos_giveways_rewards`, (t) => {
+            t.uuid('id').primary();
+            t.uuid('giveway_id')
+              .references('id')
+              .inTable('hallyos_giveways')
+              .notNull()
+              .onDelete('cascade');
+            t.string('name').notNullable();
+            t.integer('quantity').defaultTo(1);
+            t.timestamps(true, true);
+            t.unique(['id', 'giveway_id']);
+          })
+          .then(() => knex.raw(onInsertTrigger('hallyos_giveways_rewards')))
+          .then(() => {
+            hallyos.log.info(
+              "Successfully created table 'hallyos_giveways_rewards'"
+            );
+          })
+          .catch((err) => {
+            hallyos.log.error(err);
+          });
+      }
+    });
+  });
 };
