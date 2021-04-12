@@ -51,4 +51,6 @@ app.delete(
   require('./controllers/TicketsController').delete
 );
 
+app.get('/api/logs', require('./controllers/LogsController').find);
+
 module.exports = app;
