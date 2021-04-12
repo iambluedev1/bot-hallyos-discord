@@ -13,6 +13,7 @@ new Promise((resolve, reject) => {
     let listener = require('./listeners/' + file);
     hallyos.log.info('Loader discord listener ' + file);
     client.on(listener.listen, listener.run);
+    hallyos.event.on(listener.listen, listener.run);
   });
 
   const replaceAll = (str, search, replacement) => {
