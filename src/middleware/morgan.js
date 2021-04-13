@@ -46,7 +46,7 @@ module.exports = async (req, res, next) => {
         hallyos.log[fn](message.trim());
         hallyos.helpers.record.apiAction(
           getIp(req),
-          res.action.toUpperCase() || 'UNKNOWN',
+          'action' in res ? res.action.toUpperCase() : 'UNKNOWN',
           message.trim()
         );
       },
