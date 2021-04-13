@@ -26,6 +26,7 @@ module.exports = () => {
       });
     });
   } else {
+    ipc.config.unlink = true;
     ipc.serve(() => {
       ipc.server.on('from-cron', (data) => {
         hallyos.event.emit(data.event, data.args || null);
