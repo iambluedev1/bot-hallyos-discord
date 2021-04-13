@@ -186,6 +186,7 @@ module.exports = (knex) => {
             t.string('end_set_at');
             t.string('discord_message_id');
             t.timestamp('started_at');
+            t.string('last_alert');
             t.boolean('scheduled').defaultTo(false).notNullable();
             t.timestamp('created_at').defaultTo(knex.fn.now());
           })
@@ -240,12 +241,17 @@ module.exports = (knex) => {
               .references('id')
               .inTable('hallyos_giveways')
               .notNull()
-              .onDelete('cascade')
-              .primary();
-            t.string('winner_discord_author_id', 255);
-            t.string('winner_discord_author_username');
+              .onDelete('cascade');
+            t.uuid('reward_id')
+              .references('id')
+              .inTable('hallyos_giveways_rewards')
+              .notNull()
+              .onDelete('cascade');
+            t.string('discord_id', 255);
+            t.string('discord_username');
             t.string('seed');
             t.timestamps(true, true);
+            t.unique(['giveway_id', 'reward_id', 'discord_id']);
           })
           .then(() => {
             hallyos.log.info(
