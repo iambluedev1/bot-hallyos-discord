@@ -28,7 +28,7 @@ module.exports.discord = {
   },
 
   giveways: {
-    channelId: '831226983965786162',
+    channelId: '831254427776057426',
     roles: ['admin'],
     reaction: {
       emoji: '🍀',
