@@ -27,6 +27,11 @@ module.exports = {
         -giveway ${args[0]} rewards add <quantity> <reward> : ajouter une récompense
         -giveway ${args[0]} rewards list : voir la liste des récompences
         -giveway ${args[0]} rewards remove <reward> : retirer une récompense
+
+        -giveway ${args[0]} excludes add <role> : exclure un rôle
+        -giveway ${args[0]} excludes list : voir la liste des rôles exclus
+        -giveway ${args[0]} excludes remove <role> : retirer un rôle de l'exclusion
+
         -giveway ${args[0]} schedule <date au format YYYY-MM-DD> <heure au format HH:MM> : définir la date de fin
         
         -giveway ${args[0]} preview : prévisualisation du concours
