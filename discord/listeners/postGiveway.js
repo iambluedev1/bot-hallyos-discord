@@ -35,6 +35,8 @@ module.exports = {
       .format('D MMMM YYYY à HH:mm')}**
 
     A vous de jouer ! Bonne chance !
+
+    @here
  `;
 
     if (isPreview) {
