@@ -1,7 +1,26 @@
 const pickRandom = require('pick-random');
 
-const checkWinnerEntry = async (user) => {
-  return true;
+const checkWinnerEntry = (giveway, user) => {
+  const guild = hallyos.discord.client.guilds.resolve(
+    hallyos.config.discord.guildId
+  );
+  const member = _.find(guild.members.cache.array(), (m) => m.id == user);
+  const roles = (JSON.parse(giveway.excluded_roles) || []).map((r) => r.name);
+  const exclude = member.bot || hallyos.discord.client.hasRole(member, roles);
+  if (exclude)
+    hallyos.log.debug(
+      user +
+        '(' +
+        member.user.username +
+        ')' +
+        ' need to be excluded from the giveway ' +
+        giveway.id +
+        '; user=' +
+        member.roles.cache.array().map((r) => r.name) +
+        '; exluded=' +
+        roles
+    );
+  return !(exclude === true);
 };
 
 module.exports.roll = async (giveway) => {
@@ -21,6 +40,8 @@ module.exports.roll = async (giveway) => {
     participants = guild.members.cache.array().map((e) => e.id);
   }
 
+  participants = _.filter(participants, (p) => checkWinnerEntry(giveway, p));
+
   hallyos.log.info(participants.length + ' participants fetched');
 
   const rewards = await db('hallyos_giveways_rewards')
@@ -37,27 +58,9 @@ module.exports.roll = async (giveway) => {
 
   hallyos.log.info(nbRewards + ' rewards fetched');
 
-  const rolledWinners = pickRandom(participants, { count: nbRewards });
-  const winners = [];
-
-  for await (const rolledWinner of rolledWinners) {
-    const isValidEntry =
-      (await checkWinnerEntry(rolledWinner)) &&
-      !winners.some((winner) => winner.id === rolledWinner.id);
-    if (isValidEntry) winners.push({ id: rolledWinner });
-    else {
-      for (const user of participants) {
-        const alreadyRolled = winners.some((winner) => winner.id === user);
-        if (alreadyRolled) continue;
-        const isUserValidEntry = this.checkWinnerEntry(user);
-        if (!isUserValidEntry) continue;
-        else {
-          winners.push({ id: user });
-          break;
-        }
-      }
-    }
-  }
+  const winners = pickRandom(participants, { count: nbRewards }).map((p) => {
+    return { id: p };
+  });
 
   for await (let winner of winners) {
     const random = Math.floor(Math.random() * rewardsProp.length);

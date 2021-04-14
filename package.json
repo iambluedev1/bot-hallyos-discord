@@ -41,6 +41,7 @@
     "node-ipc": "^9.1.4",
     "nodemailer": "^6.4.16",
     "nodemailer-smtp-transport": "^2.7.4",
+    "pick-random": "^3.0.0",
     "read-last-lines": "^1.7.2",
     "uest": "^1.0.20",
     "validator": "^13.5.2",
