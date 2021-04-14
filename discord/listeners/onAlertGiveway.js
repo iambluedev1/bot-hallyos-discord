@@ -51,7 +51,7 @@ module.exports = {
     } else if (type == 'END_IN_ONE_HOUR') {
       const date = moment(giveway.end_set_at).locale('fr').format('HH:mm');
       hallyos.discord.client.sendSuccess(
-        "C'est bien la fin !",
+        "C'est bientôt la fin !",
         `
       @here
 
