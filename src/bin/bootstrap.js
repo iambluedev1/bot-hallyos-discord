@@ -187,6 +187,7 @@ module.exports = (knex) => {
             t.string('discord_message_id');
             t.timestamp('started_at');
             t.string('last_alert');
+            t.text('excluded_roles');
             t.boolean('scheduled').defaultTo(false).notNullable();
             t.timestamp('created_at').defaultTo(knex.fn.now());
           })

@@ -43,6 +43,16 @@ module.exports = {
         preview,
         channel
       );
+      const roles = (JSON.parse(retrieved[0].excluded_roles) || []).map(
+        (r) => r.name
+      );
+      hallyos.discord.client.sendInfo(
+        `Liste des rôles exclus`,
+        roles.length > 0
+          ? roles.join(', ')
+          : "Aucun rôle n'est exclu du giveway",
+        channel
+      );
       m.react(hallyos.config.discord.giveways.reaction.emoji);
     } else {
       const channelGiveway = hallyos.discord.client.channels.cache.get(
