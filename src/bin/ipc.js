@@ -23,6 +23,8 @@ module.exports = () => {
             ipc.config.socketRoot + ipc.config.appspace + ipc.config.id
           }`
         );
+        hallyos.log.error('Master process is down, shutdown too !');
+        process.exit(-1);
       });
     });
   } else {
