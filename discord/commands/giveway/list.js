@@ -1,4 +1,4 @@
-const { schedule } = require('node-cron');
+const moment = require('moment');
 
 module.exports = {
   command: 'list',
@@ -11,10 +11,18 @@ module.exports = {
     hallyos.discord.client.sendInfo(
       'Liste des concours',
       _.map(giveways, (g) => {
-        return `${g.name} ${
-          g.scheduled ? 'en cours' : 'non-programmé'
-        } ajouté le : ${g.created_at}`;
-      }).join('\n') || 'Aucun concours de crée',
+        return `nom: **${g.name}**
+        état: ${
+          g.scheduled
+            ? 'en cours'
+            : g.last_alert == 'ENDED'
+            ? 'terminé'
+            : 'non-programmé'
+        } 
+        ajouté le : ${moment(g.created_at)
+          .locale('fr')
+          .format('D MMMM YYYY à HH:mm')}`;
+      }).join('\n\n') || 'Aucun concours de crée',
       channel
     );
 
