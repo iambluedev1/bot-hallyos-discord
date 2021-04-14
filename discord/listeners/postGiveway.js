@@ -43,7 +43,7 @@ module.exports = {
         preview,
         channel
       );
-      const roles = (JSON.parse(retrieved[0].excluded_roles) || []).map(
+      const roles = (JSON.parse(giveway.excluded_roles) || []).map(
         (r) => r.name
       );
       hallyos.discord.client.sendInfo(
