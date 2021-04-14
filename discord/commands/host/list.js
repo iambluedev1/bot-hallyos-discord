@@ -5,7 +5,7 @@ const timeAgo = new TimeAgo('fr');
 module.exports = {
   command: 'list',
   description: 'Liste tous les hôtes',
-  usage: 'ping list',
+  usage: 'host list',
   roles: hallyos.config.discord.status.roles,
   execute: (args, channel, member, message) => {
     fetch('http://localhost:' + hallyos.config.port + '/api/hosts?bot=true')
