@@ -8,10 +8,10 @@ module.exports.smtp = {
     },
   },
   from: {
-    NO_REPLY: 'hallyos <no-reply@blackpink-access.com>',
+    NO_REPLY: "HallyosBot - Report <hallyos-bot@poneyhost.eu>",
   },
   lists: {
-    ADMIN: 'admin <contact@guillaumechalons.fr>',
-    DEV: 'dev <contact@guillaumechalons.fr>',
+    ADMIN: "admin <admin@hallyos.com>",
+    DEV: "dev <dev@hallyos.com>",
   },
 };
